@@ -95,45 +95,161 @@
     </div>
   </section>
 
- <!-- Documenting My Journey Section -->
+<!-- Updated Documenting My Journey Section -->
 <section id="documenting" class="py-20 px-4 max-w-6xl mx-auto">
   <h2 class="text-3xl font-bold mb-12 text-center">Documenting My Journey</h2>
   
-  <div class="video-slider">
-    <!-- First 3 Videos -->
-    <div class="slide active">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="aspect-w-16 aspect-h-9">
-          <iframe src="https://www.youtube.com/embed/VpK8CoWBnq8" class="rounded-lg w-full" frameborder="0" allowfullscreen></iframe>
+  <div class="video-slider relative">
+    <!-- Slides Container -->
+    <div class="overflow-hidden">
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="video-thumbnail">
+            <iframe src="https://www.youtube.com/embed/VpK8CoWBnq8?rel=0&modestbranding=1" 
+                    class="w-full h-64 md:h-80 rounded-xl shadow-lg" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>
+          </div>
+          <div class="video-thumbnail hidden md:block">
+            <iframe src="https://www.youtube.com/embed/w89etN8QqNQ?rel=0&modestbranding=1" 
+                    class="w-full h-64 md:h-80 rounded-xl shadow-lg" 
+                    frameborder="0" 
+                    allowfullscreen></iframe>
+          </div>
+          <div class="video-thumbnail hidden md:block">
+            <iframe src="https://www.youtube.com/embed/example1?rel=0&modestbranding=1" 
+                    class="w-full h-64 md:h-80 rounded-xl shadow-lg" 
+                    frameborder="0" 
+                    allowfullscreen></iframe>
+          </div>
         </div>
-        <div class="aspect-w-16 aspect-h-9 hidden md:block">
-          <iframe src="https://www.youtube.com/embed/w89etN8QqNQ" class="rounded-lg w-full" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="aspect-w-16 aspect-h-9 hidden md:block">
-          <iframe src="https://www.youtube.com/embed/example1" class="rounded-lg w-full" frameborder="0" allowfullscreen></iframe>
+      </div>
+      
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="video-thumbnail">
+            <iframe src="https://www.youtube.com/embed/example2?rel=0&modestbranding=1" 
+                    class="w-full h-64 md:h-80 rounded-xl shadow-lg" 
+                    frameborder="0" 
+                    allowfullscreen></iframe>
+          </div>
+          <div class="video-thumbnail hidden md:block">
+            <iframe src="https://www.youtube.com/embed/example3?rel=0&modestbranding=1" 
+                    class="w-full h-64 md:h-80 rounded-xl shadow-lg" 
+                    frameborder="0" 
+                    allowfullscreen></iframe>
+          </div>
+          <div class="video-thumbnail hidden md:block">
+            <iframe src="https://www.youtube.com/embed/example4?rel=0&modestbranding=1" 
+                    class="w-full h-64 md:h-80 rounded-xl shadow-lg" 
+                    frameborder="0" 
+                    allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </div>
     
-    <!-- Next 3 Videos -->
-    <div class="slide">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="aspect-w-16 aspect-h-9">
-          <iframe src="https://www.youtube.com/embed/example2" class="rounded-lg w-full" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="aspect-w-16 aspect-h-9 hidden md:block">
-          <iframe src="https://www.youtube.com/embed/example3" class="rounded-lg w-full" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="aspect-w-16 aspect-h-9 hidden md:block">
-          <iframe src="https://www.youtube.com/embed/example4" class="rounded-lg w-full" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    
+    <!-- Navigation Arrows -->
     <button class="nav-button prev hidden">❮</button>
     <button class="nav-button next">❯</button>
+    
+    <!-- Slide Indicators -->
+    <div class="flex justify-center mt-6 space-x-2">
+      <span class="indicator w-3 h-3 rounded-full bg-blue-400 opacity-50 cursor-pointer" data-index="0"></span>
+      <span class="indicator w-3 h-3 rounded-full bg-blue-400 opacity-50 cursor-pointer" data-index="1"></span>
+    </div>
   </div>
 </section>
+
+<script>
+  // Enhanced Slider Functionality
+  const slides = document.querySelectorAll('.slide');
+  const prevButton = document.querySelector('.prev');
+  const nextButton = document.querySelector('.next');
+  const indicators = document.querySelectorAll('.indicator');
+  let currentSlide = 0;
+  let autoplayInterval;
+
+  function showSlide(n) {
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[n].classList.add('active');
+    
+    // Update indicators
+    indicators.forEach(ind => ind.classList.toggle('opacity-100', parseInt(ind.dataset.index) === n));
+    indicators.forEach(ind => ind.classList.toggle('opacity-50', parseInt(ind.dataset.index) !== n));
+    
+    // Update navigation buttons
+    prevButton.classList.toggle('hidden', n === 0);
+    nextButton.classList.toggle('hidden', n === slides.length - 1);
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  // Autoplay functionality
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  // Event listeners
+  nextButton.addEventListener('click', () => {
+    nextSlide();
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  prevButton.addEventListener('click', () => {
+    prevSlide();
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  indicators.forEach(indicator => {
+    indicator.addEventListener('click', () => {
+      currentSlide = parseInt(indicator.dataset.index);
+      showSlide(currentSlide);
+      stopAutoplay();
+      startAutoplay();
+    });
+  });
+
+  // Pause autoplay on hover
+  const slider = document.querySelector('.video-slider');
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
+
+  // Initialize
+  showSlide(0);
+  startAutoplay();
+
+  // Touch support for mobile
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    stopAutoplay();
+  }, {passive: true});
+
+  slider.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    if (touchStartX - touchEndX > 50) nextSlide();
+    if (touchEndX - touchStartX > 50) prevSlide();
+    startAutoplay();
+  }, {passive: true});
+</script>
   <!-- Research Highlights Section (Restored) -->
   <section id="academia" class="py-20 bg-gray-800">
     <div class="max-w-6xl mx-auto px-4">
