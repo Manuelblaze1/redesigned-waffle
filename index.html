@@ -285,16 +285,6 @@ Outside the lab, I manage a team offering digital services like project advisory
       mobileMenu.classList.toggle('active');
     });
   </script>
-  <script>
-// Backup download handler for mobile devices
-document.querySelectorAll('.cv-download').forEach(button => {
-  button.addEventListener('click', function(e) {
-    e.preventDefault();
-    const fileId = this.href.split('id=')[1];
-    window.open(`https://docs.google.com/document/d/${fileId}/export?format=pdf`, '_blank');
-  });
-});
-</script>
 </body>
 </html>
 
